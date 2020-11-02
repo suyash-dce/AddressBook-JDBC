@@ -25,4 +25,11 @@ public class AddressBookJDBCServiceTest {
 		boolean isSynced = addressBookService.isAddressBookSyncedWithDB("Suyash");
 		assertTrue(isSynced);
 	}
+	
+	@Test
+	public void givenDateRange_WhenRetrievedContactInfo_ShouldMatchCount() throws AddressBookDBException{
+		LocalDate startDate = LocalDate.of(2019, 01, 01);
+		LocalDate endDate= LocalDate.now();
+		List<Contact> contactList=addressBookService.getContactsForDateRange(startDate,endDate);
+	}
 }

@@ -1,5 +1,8 @@
+import java.time.LocalDate;
 import java.util.List;
+
 import com.bridgelabz.main.AddressBookDBException.ExceptionType;
+import com.bridgelabz.main.AddressBookService.IOService;
 
 public class AddressBookService {
 	public enum IOService {
@@ -37,13 +40,17 @@ public class AddressBookService {
 			throw new AddressBookDBException("No data found", ExceptionType.NO_DATA_FOUND);
 	}
 
-	private Contact getContactData(String name) {
-		readContactData(IOService.DB_IO);
-		return contactList.stream().filter(e -> e.getFirstName().equals(name)).findFirst().orElse(null);
-	}
-
 	public boolean isAddressBookSyncedWithDB(String firstName) {
 		Contact contact = getContactData(firstName);
 		return addressBookJDBCServices.getContacts(firstName).get(0).equals(contact);
+	}
+
+	public List<Contact> getContactsForDateRange(LocalDate startDate, LocalDate endDate) {
+		return addressBookJDBCServices.getContactForDateRange(startDate, endDate);
+	}
+
+	private Contact getContactData(String name) {
+		readContactData(IOService.DB_IO);
+		return contactList.stream().filter(e -> e.getFirstName().equals(name)).findFirst().orElse(null);
 	}
 }
