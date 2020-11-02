@@ -18,4 +18,11 @@ public class AddressBookJDBCServiceTest {
 		List<Contact> contactList = addressBookJDBCServices.readData();
 		assertEquals(7, contactList.size());
 	}
+	
+	@Test
+	public void givenName_WhenUpdatedContactInfo_ShouldSyncWithDB() throws AddressBookDBException {
+		addressBookService.updateCity("Suyash", "Delhi");
+		boolean isSynced = addressBookService.isAddressBookSyncedWithDB("Suyash");
+		assertTrue(isSynced);
+	}
 }
