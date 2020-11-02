@@ -32,4 +32,16 @@ public class AddressBookJDBCServiceTest {
 		LocalDate endDate= LocalDate.now();
 		List<Contact> contactList=addressBookService.getContactsForDateRange(startDate,endDate);
 	}
+	
+	@Test
+	public void givenAddressBookData_whenRetreivedByCity_ShouldMatchContactCount() {
+		List<Contact>contactList=addressBookService.getContactsByCity("New Delhi");
+		assertEquals(1,contactList.size());
+	}
+        
+	@Test
+	public void givenAddressBookData_whenRetreivedByState_ShouldMatchContactCount() {
+		List<Contact>contactList=addressBookService.getContactsByCity("Delhi");
+		assertEquals(1,contactList.size());
+	}
 }
