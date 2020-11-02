@@ -74,4 +74,9 @@ public class AddressBookJDBCServices{
 		}
 		return 0;
 	}
+	
+	public List<Contact> getContactsByField(String columnName, String columnValue) {
+		String sql = String.format("select * from addressBook where %s = '%s'", columnName,columnValue);
+		return getContactList(sql);
+	}
 }
