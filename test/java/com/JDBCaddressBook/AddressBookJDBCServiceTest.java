@@ -52,4 +52,18 @@ public class AddressBookJDBCServiceTest {
 		boolean isSynced = addressBookService.isAddressBookSyncedWithDB("Trisha");
 		assertTrue(isSynced);
 	}
+	
+	@Test
+	public void givenMultipeContacts_WhenAddedToDBWithMultiThreads_ShouldSyncWithDB() throws AddressBookDBException {
+		List<Contact> contacts = new ArrayList<>() {
+			{
+				add(new Contact("Akshit", "Jain", "Uttam Nagar", "New Delhi", "Delhi", "110059",
+						"7968700591", "akshit.jain@gmail.com"));
+				add(new Contact("Sarvagya", "Bhargava", "Vijaynagar", "Bengaluru", "Karnataka", "560091", "8800793730",
+						"emailsarvagya@gmail.com"));
+			}
+		};
+		addressBookService.addNewMultipleContacts(contacts);
+		assertEquals(7, addressBookService.readContactData(IOService.DB_IO).size());
+	}
 }
