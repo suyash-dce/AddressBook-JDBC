@@ -12,6 +12,12 @@ public class AddressBookJDBCServiceTest {
 	public void initialize() {
 		addressBookJDBCServices = new AddressBookJDBCServices();
 	}
+	
+	@Before
+	public void setUp() {
+		RestAssured.baseURI = "http://localhost";
+		RestAssured.port = 3000;
+	}
 
 	@Test
 	public void givenAddressBookData_WhenRetrieved_ShouldMatchContactCount() {
@@ -82,4 +88,6 @@ public class AddressBookJDBCServiceTest {
 		long entries = employeePayrollService.countEntries(IOService.REST_IO);
 		Assert.assertEquals(3, entries);
 	}
+	
+	
 }
