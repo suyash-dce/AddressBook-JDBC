@@ -101,4 +101,15 @@ public class AddressBookJDBCServiceTest {
 		request.body(contactJson);
 		Response response = request.put("/contacts/" + contactData.id);
 	}
+	
+	@Test
+	public void givenNewContactName_WhenDeleted_ShouldMatch() {
+		Contact[] arrayOfContacts = getContactList();
+		addressBookService = new AddressBookService(Arrays.asList(arrayOfContacts));
+		Contact contactData = addressBookService.getContactData("Akshit");
+		RequestSpecification request = RestAssured.given();
+		request.header("Content-Type", "application/json");
+		Response response = request.delete("/contacts/" + contactData.id);
+		addressBookService.deleteContact(contactData.firstName, IOService.REST_IO);
+	}
 }
