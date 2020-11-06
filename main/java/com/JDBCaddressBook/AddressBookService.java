@@ -106,4 +106,11 @@ public class AddressBookService {
 			} catch (InterruptedException e) {
 			}
 	}
+	
+	public void deleteContact(String firstName, IOService ioService) {
+		if (ioService.equals(IOService.REST_IO)) {
+			Contact contactData = this.getContactData(firstName);
+			contactList.remove(contactData);
+		}
+	}
 }
