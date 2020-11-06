@@ -76,6 +76,14 @@ public class AddressBookService {
 		contactList.add(contactData);
 	}
 	
+	public void updateContactJsonServer(String firstName, String address, IOService ioService) {
+		if (ioService.equals(IOService.REST_IO)) {
+			Contact contact = this.getContactData(firstName);
+			if (contact != null)
+				contact.address = address;
+		}
+	}
+	
 	public void addNewMultipleContacts(List<Contact> contacts) throws AddressBookDBException {
 		Map<Integer, Boolean> status = new HashMap<>();
 		contacts.forEach(contact -> {
