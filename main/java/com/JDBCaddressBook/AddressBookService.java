@@ -68,6 +68,14 @@ public class AddressBookService {
 				phoneNo, email);
 	}
 	
+	public void addContactToJSONServer(Contact contactData, IOService ioService) {
+		if (ioService.equals(IOService.DB_IO))
+			this.addContactToDB(contactData.firstName, contactData.lastName, contactData.address, contactData.city,
+					contactData.state, contactData.zip, contactData.phoneNumber, contactData.email,
+					contactData.addressBookName, contactData.startDate);
+		contactList.add(contactData);
+	}
+	
 	public void addNewMultipleContacts(List<Contact> contacts) throws AddressBookDBException {
 		Map<Integer, Boolean> status = new HashMap<>();
 		contacts.forEach(contact -> {

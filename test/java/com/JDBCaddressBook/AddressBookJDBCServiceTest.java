@@ -66,4 +66,20 @@ public class AddressBookJDBCServiceTest {
 		addressBookService.addNewMultipleContacts(contacts);
 		assertEquals(7, addressBookService.readContactData(IOService.DB_IO).size());
 	}
+	
+	public Contact[] getContactList() {
+		Response response = RestAssured.get("/contacts");
+		log.info("Contact entries in JSON Server :\n" + response.asString());
+		Contact[] arrayOfContacts = new Gson().fromJson(response.asString(), Contact[].class);
+		return arrayOfContacts;
+	}
+	
+	@Test
+	public void givenEmployeeDataInJsonServer_WhenRetrived_ShouldMatchCount() {
+		Contact[] arrayOfEmps = getContactList();
+		AddressBookService employeePayrollService;
+		employeePayrollService = new AddressBookService(Arrays.asList(arrayOfEmps));
+		long entries = employeePayrollService.countEntries(IOService.REST_IO);
+		Assert.assertEquals(3, entries);
+	}
 }
