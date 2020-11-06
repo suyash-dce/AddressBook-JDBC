@@ -89,5 +89,16 @@ public class AddressBookJDBCServiceTest {
 		Assert.assertEquals(3, entries);
 	}
 	
-	
+	@Test
+	public void givenNewContact_WhenUpdated_ShouldMatch() {
+		Contact[] arrayOfContacts = getContactList();
+		addressBookService = new AddressBookService(Arrays.asList(arrayOfContacts));
+		addressBookService.updateContactJsonServer("Suyash", "N.Delhi", IOService.REST_IO);
+		Contact contactData = addressBookService.getContactData("Suyash");
+		String contactJson = new Gson().toJson(contactData);
+		RequestSpecification request = RestAssured.given();
+		request.header("Content-Type", "application/json");
+		request.body(contactJson);
+		Response response = request.put("/contacts/" + contactData.id);
+	}
 }
